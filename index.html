@@ -57,15 +57,15 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&
 const dt=d=>new Date(d).toLocaleString("en-PH",{dateStyle:"short",timeStyle:"short"});
 function message(id,t,ok=false){document.getElementById(id).innerHTML=t?'<div class="msg '+(ok?'success':'err')+'">'+esc(t)+'</div>':""}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(b.dataset.p).classList.add("active");if(b.dataset.p==="pos")renderButtons()});
-document.getElementById("loginForm").onsubmit=async e=>{e.preventDefault();message("loginMsg","");let{error}=await db.auth.signInWithPassword({email:email.value.trim(),password:password.value});if(error)message("loginMsg",error.message)};
-logout.onclick=async()=>{await db.auth.signOut();location.reload()};
+document.getElementById("loginForm").onsubmit=async e=>{e.preventDefault();message("loginMsg","");const emailValue=document.getElementById("email").value.trim();const passwordValue=document.getElementById("password").value;try{const{error}=await db.auth.signInWithPassword({email:emailValue,password:passwordValue});if(error)message("loginMsg",error.message);else message("loginMsg","Login successful. Loading...",true)}catch(err){message("loginMsg",err.message||"Login failed")}};
+document.getElementById("logout").onclick=async()=>{await db.auth.signOut();location.reload()};
 async function start(){let{data:{session}}=await db.auth.getSession();if(session){user=session.user;await enter()}}
 db.auth.onAuthStateChange(async(_,s)=>{if(s&&!user){user=s.user;await enter()}});
 async function enter(){
- login.classList.add("hide");app.classList.remove("hide");
+ document.getElementById("login").classList.add("hide");document.getElementById("app").classList.remove("hide");
  let r=await db.from("profiles").select("name,role").eq("id",user.id).maybeSingle();
  if(r.error)r=await db.from("profiles").select("full_name,role").eq("id",user.id).maybeSingle();
- profile=r.data||{role:"employee",name:user.email};uname.textContent=profile.name||profile.full_name||user.email;urole.textContent=profile.role||"employee";await loadAll()
+ profile=r.data||{role:"employee",name:user.email};document.getElementById("uname").textContent=profile.name||profile.full_name||user.email;document.getElementById("urole").textContent=profile.role||"employee";await loadAll()
 }
 async function loadAll(){await Promise.all([loadProducts(),loadSales(),loadExpenses()]);renderProducts();renderButtons();renderCart();renderSales();renderExpenses();dashboard();reports()}
 async function loadProducts(){let r=await db.from("products").select("id,name,sku,stock,wholesale_price,retail_price,active,created_at").eq("active",true).order("name");if(!r.error)products=r.data||[];else message("productMsg",r.error.message)}
