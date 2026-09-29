@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Triple K Vape Shop Inventory</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#f4f6f8;color:#17202a}
+*{box-sizing:border-box}body{margin:0}.top{background:#111827;color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:800}.wrap{max-width:1100px;margin:auto;padding:20px}.login{max-width:420px;margin:70px auto;background:#fff;padding:28px;border-radius:16px;box-shadow:0 8px 30px #0001}
+input,select,button{width:100%;padding:11px;margin:6px 0;border:1px solid #d1d5db;border-radius:9px;font:inherit}
+button{background:#111827;color:white;cursor:pointer;border:0}.danger{background:#b91c1c}.muted{color:#6b7280;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}.card{background:#fff;padding:18px;border-radius:14px;box-shadow:0 2px 10px #0000000a}.stat{font-size:25px;font-weight:800}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}nav button{width:auto;background:#fff;color:#111;border:1px solid #ddd}
+section{display:none}.active{display:block}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;font-size:14px}
+.small{width:auto;padding:8px 12px}.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.badge{padding:3px 8px;border-radius:99px;background:#e5e7eb;font-size:12px}
+@media(max-width:600px){.wrap{padding:12px}table{font-size:12px}.top{padding:12px}}
+</style>
+</head>
+<body>
+<div id="login" class="login">
+<h1>Triple K Inventory</h1><p class="muted">Starter version — ready for Netlify. Cloud sync will be connected in the next step.</p>
+<input id="email" placeholder="Email" value="owner@triplek.local">
+<input id="password" type="password" placeholder="Password" value="owner123">
+<button onclick="login()">Login</button>
+<p id="err" class="muted"></p>
+<p class="muted">Demo: owner@triplek.local / owner123<br>employee1@triplek.local / employee123</p>
+</div>
+
+<div id="app" style="display:none">
+<div class="top"><div class="brand">TRIPLE K INVENTORY</div><button class="small" onclick="logout()">Logout</button></div>
+<div class="wrap">
+<nav>
+<button onclick="show('dash')">Dashboard</button><button onclick="show('products')">Products</button>
+<button onclick="show('sales')">Sales</button><button onclick="show('expenses')">Expenses</button>
+</nav>
+
+<section id="dash" class="active">
+<h2>Dashboard</h2><div class="grid">
+<div class="card"><div class="muted">Products</div><div id="sProducts" class="stat">0</div></div>
+<div class="card"><div class="muted">Stock Units</div><div id="sStock" class="stat">0</div></div>
+<div class="card"><div class="muted">Sales Today</div><div id="sSales" class="stat">₱0.00</div></div>
+<div class="card"><div class="muted">Expenses Today</div><div id="sExp" class="stat">₱0.00</div></div>
+<div class="card"><div class="muted">Profit Today</div><div id="sProfit" class="stat">₱0.00</div></div>
+</div>
+</section>
+
+<section id="products">
+<h2>Products</h2>
+<div class="card"><div class="row">
+<input id="pName" placeholder="Product name">
+<input id="pSku" placeholder="SKU">
+<input id="pStock" type="number" placeholder="Stock">
+<input id="pWholesale" type="number" placeholder="Wholesale price">
+<input id="pRetail" type="number" placeholder="Resell price">
+<button onclick="addProduct()">Add Product</button>
+</div></div><br>
+<div class="card"><table><thead><tr><th>Product</th><th>SKU</th><th>Stock</th><th>Wholesale</th><th>Retail</th><th></th></tr></thead><tbody id="productRows"></tbody></table></div>
+</section>
+
+<section id="sales">
+<h2>Sales / POS</h2>
+<div class="card"><div class="row">
+<select id="saleProduct"></select><input id="saleQty" type="number" min="1" value="1">
+<button onclick="addSale()">Record Sale</button>
+</div><p class="muted">A sale deducts stock automatically.</p></div><br>
+<div class="card"><table><thead><tr><th>Date</th><th>Product</th><th>Qty</th><th>Total</th></tr></thead><tbody id="saleRows"></tbody></table></div>
+</section>
+
+<section id="expenses">
+<h2>Expenses</h2>
+<div class="card"><div class="row">
+<input id="eName" placeholder="Expense description"><input id="eAmount" type="number" placeholder="Amount">
+<button onclick="addExpense()">Add Expense</button>
+</div></div><br>
+<div class="card"><table><thead><tr><th>Date</th><th>Description</th><th>Amount</th></tr></thead><tbody id="expenseRows"></tbody></table></div>
+</section>
+</div></div>
+
+<script>
+const KEY='tripleKInventoryV1';
+let db=JSON.parse(localStorage.getItem(KEY)||'{"products":[],"sales":[],"expenses":[]}');
+function save(){localStorage.setItem(KEY,JSON.stringify(db));render();}
+function login(){
+ const e=document.getElementById('email').value.trim(), p=document.getElementById('password').value;
+ if((e==='owner@triplek.local'&&p==='owner123')||(e==='employee1@triplek.local'&&p==='employee123')){
+  sessionStorage.setItem('tklogin','1'); document.getElementById('login').style.display='none'; document.getElementById('app').style.display='block'; render();
+ } else document.getElementById('err').textContent='Incorrect demo login.';
+}
+function logout(){sessionStorage.removeItem('tklogin');location.reload()}
+function show(id){document.querySelectorAll('section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function addProduct(){
+ const name=pName.value.trim(); if(!name)return;
+ db.products.push({id:Date.now(),name,sku:pSku.value.trim(),stock:+pStock.value||0,wholesale:+pWholesale.value||0,retail:+pRetail.value||0}); 
+ [pName,pSku,pStock,pWholesale,pRetail].forEach(x=>x.value='');save();
+}
+function delProduct(id){db.products=db.products.filter(x=>x.id!==id);save()}
+function addSale(){
+ const id=+saleProduct.value, q=Math.max(1,+saleQty.value||1), p=db.products.find(x=>x.id===id);
+ if(!p||p.stock<q)return alert('Insufficient stock.');
+ p.stock-=q;db.sales.push({date:new Date().toISOString(),product:p.name,qty:q,total:q*p.retail});save();
+}
+function addExpense(){
+ const name=eName.value.trim(), amount=+eAmount.value||0;if(!name||!amount)return;
+ db.expenses.push({date:new Date().toISOString(),name,amount});eName.value='';eAmount.value='';save();
+}
+function money(n){return '₱'+Number(n).toLocaleString('en-PH',{minimumFractionDigits:2})}
+function today(x){return new Date(x).toDateString()===new Date().toDateString()}
+function render(){
+ sProducts.textContent=db.products.length;
+ sStock.textContent=db.products.reduce((a,x)=>a+x.stock,0);
+ const sales=db.sales.filter(x=>today(x.date)).reduce((a,x)=>a+x.total,0);
+ const exp=db.expenses.filter(x=>today(x.date)).reduce((a,x)=>a+x.amount,0);
+ sSales.textContent=money(sales);sExp.textContent=money(exp);sProfit.textContent=money(sales-exp);
+ productRows.innerHTML=db.products.map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(p.sku)}</td><td>${p.stock}</td><td>${money(p.wholesale)}</td><td>${money(p.retail)}</td><td><button class="small danger" onclick="delProduct(${p.id})">Delete</button></td></tr>`).join('');
+ saleProduct.innerHTML=db.products.map(p=>`<option value="${p.id}">${esc(p.name)} — ${p.stock} stock</option>`).join('');
+ saleRows.innerHTML=[...db.sales].reverse().map(x=>`<tr><td>${new Date(x.date).toLocaleString()}</td><td>${esc(x.product)}</td><td>${x.qty}</td><td>${money(x.total)}</td></tr>`).join('');
+ expenseRows.innerHTML=[...db.expenses].reverse().map(x=>`<tr><td>${new Date(x.date).toLocaleString()}</td><td>${esc(x.name)}</td><td>${money(x.amount)}</td></tr>`).join('');
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+if(sessionStorage.getItem('tklogin')){login()}
+</script>
+</body></html>
