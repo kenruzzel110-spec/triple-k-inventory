@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Triple K Vape Shop Inventory</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<<script>
+  const SUPABASE_URL = "https://ciudlcjuapgcxuipuksx.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_71qnMeRCUHD4m6K0-q9u5g_niC3uB4H";
+
+  const client = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+</script>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#17202a}
 .top{background:#111827;color:white;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
