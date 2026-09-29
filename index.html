@@ -1,808 +1,90 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Triple K Vape Shop Inventory</title>
-
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Triple K Vape Shop</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-const SUPABASE_URL = "https://ciudlcjuapgcxuipuksx.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_71qnMeRCUHD4m6K0-q9u5g_niC3uB4H";
-
-const client = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-</script>
-
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f6f8;
-  color:#17202a
-}
-.top{
-  background:#111827;
-  color:white;
-  padding:16px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap
-}
-.wrap{
-  max-width:1200px;
-  margin:auto;
-  padding:20px
-}
-button,input,select{font:inherit}
-button{
-  border:0;
-  border-radius:8px;
-  padding:10px 14px;
-  background:#111827;
-  color:white;
-  cursor:pointer
-}
-button.red{background:#dc2626}
-button.gray{
-  background:#e5e7eb;
-  color:#111827
-}
-.nav{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:15px 0
-}
-.nav button{
-  background:white;
-  color:#111;
-  border:1px solid #ddd
-}
-.nav button.active{
-  background:#111827;
-  color:white
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:14px
-}
-.card{
-  background:white;
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:18px
-}
-.stat{
-  font-size:25px;
-  font-weight:bold;
-  margin-top:6px
-}
-.section{display:none}
-.section.active{display:block}
-form{display:grid;gap:10px}
-.fields{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-  gap:10px
-}
-label{
-  font-size:13px;
-  font-weight:bold
-}
-input,select{
-  width:100%;
-  padding:10px;
-  border:1px solid #ccc;
-  border-radius:8px
-}
-.table{
-  overflow:auto;
-  background:white;
-  border:1px solid #ddd;
-  border-radius:10px;
-  margin-top:14px
-}
-table{
-  width:100%;
-  border-collapse:collapse
-}
-th,td{
-  padding:10px;
-  border-bottom:1px solid #eee;
-  text-align:left;
-  white-space:nowrap
-}
-th{background:#f8fafc}
-.login{
-  max-width:420px;
-  margin:70px auto
-}
-.hidden{display:none!important}
-.msg{
-  padding:10px;
-  border-radius:8px;
-  margin-bottom:10px
-}
-.error{
-  background:#fee2e2;
-  color:#991b1b
-}
-.ok{
-  background:#dcfce7;
-  color:#166534
-}
-.muted{
-  color:#667085;
-  font-size:13px
-}
-.row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap
-}
-</style>
-</head>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#172033}button,input,select{font:inherit}button{cursor:pointer}.hide{display:none!important}
+#login{min-height:100vh;display:grid;place-items:center;background:#111827;padding:20px}.loginbox{background:white;width:min(400px,100%);padding:28px;border-radius:20px}.logo{margin:auto;width:70px;height:70px;border-radius:50%;background:#111827;color:white;display:grid;place-items:center;font-weight:900;font-size:22px}.loginbox h1{text-align:center;margin-bottom:4px}.muted{color:#6b7280;font-size:13px}.field{margin:10px 0}.field label{display:block;font-size:12px;font-weight:bold;margin-bottom:5px}.field input,.field select,.search{width:100%;padding:11px;border:1px solid #ddd;border-radius:9px;background:white}.btn{border:0;border-radius:9px;padding:10px 14px;font-weight:bold}.primary{background:#111827;color:white}.light{background:#eef0f3}.danger{background:#fee2e2;color:#991b1b}.ok{background:#dcfce7;color:#166534}.block{width:100%}.msg{padding:9px;border-radius:8px;margin-top:10px;font-size:13px}.err{background:#fee2e2;color:#991b1b}.success{background:#dcfce7;color:#166534}
+header{height:60px;background:#111827;color:white;padding:10px 16px;display:flex;justify-content:space-between;align-items:center}.user{text-align:right;font-size:12px;color:#ddd}
+.layout{display:flex;min-height:calc(100vh - 60px)}nav{width:220px;background:white;border-right:1px solid #ddd;padding:10px}nav button{display:block;width:100%;text-align:left;border:0;background:white;padding:12px;border-radius:9px;margin-bottom:4px;font-weight:bold}nav button.active,nav button:hover{background:#eef0f3}
+main{flex:1;padding:16px;min-width:0}.page{display:none}.page.active{display:block}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card,.panel{background:white;border:1px solid #e2e5e9;border-radius:14px;padding:15px}.card{min-height:100px}.metric{font-size:24px;font-weight:900;margin-top:8px}.green{color:#15803d}.red{color:#dc2626}.panel{margin-top:14px}.head{display:flex;justify-content:space-between;gap:10px;align-items:center}.head h3{margin:0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.table{overflow:auto}table{border-collapse:collapse;width:100%;min-width:650px}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;font-size:13px}th{color:#6b7280;font-size:11px}.right{text-align:right}.badge{padding:4px 8px;border-radius:99px;font-size:11px;font-weight:bold}.low{background:#fee2e2;color:#991b1b}.mid{background:#fef3c7;color:#92400e}.high{background:#dcfce7;color:#166534}
+.pos{display:grid;grid-template-columns:1.1fr .9fr;gap:12px}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;max-height:560px;overflow:auto}.prod{border:1px solid #ddd;background:white;border-radius:10px;padding:12px;text-align:left}.cartrow{display:grid;grid-template-columns:1fr 65px 80px 30px;gap:7px;align-items:center;padding:9px 0;border-bottom:1px solid #eee}.qty{width:65px;padding:7px;border:1px solid #ddd;border-radius:7px}.total{display:flex;justify-content:space-between;font-size:20px;font-weight:900;margin-top:12px}
+@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}.pos{grid-template-columns:1fr}.products{grid-template-columns:1fr 1fr}nav{width:180px}.grid3{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.layout{display:block}nav{width:100%;display:flex;overflow:auto}nav button{white-space:nowrap;width:auto}.grid2,.grid3{grid-template-columns:1fr}main{padding:10px}}
+</style></head><body>
 
-<body>
+<div id="login"><div class="loginbox"><div class="logo">3K</div><h1>Triple K Vape Shop</h1><p class="muted" style="text-align:center">Inventory & Sales System</p>
+<form id="loginForm"><div class="field"><label>Email</label><input id="email" type="email" required></div><div class="field"><label>Password</label><input id="password" type="password" required></div><button class="btn primary block">Login</button></form><div id="loginMsg"></div></div></div>
 
-<!-- LOGIN -->
-<div id="login" class="wrap login">
-  <div class="card">
-    <h1>TRIPLE K INVENTORY</h1>
-    <p class="muted">Cloud Inventory System</p>
+<div id="app" class="hide"><header><b>3K • Triple K Vape Shop</b><div class="user"><b id="uname">User</b><br><span id="urole">employee</span> · <button id="logout" style="background:none;color:white;border:0;text-decoration:underline;padding:0">Logout</button></div></header>
+<div class="layout"><nav>
+<button class="active" data-p="dash">📊 Dashboard</button><button data-p="pos">🛒 Sales / POS</button><button data-p="products">📦 Products</button><button data-p="sales">🧾 Sales History</button><button data-p="expenses">💸 Expenses</button><button data-p="reports">📈 Reports</button>
+</nav><main>
 
-    <div id="loginMsg"></div>
+<section id="dash" class="page active"><h2>Dashboard</h2><p class="muted">Today’s sales, stock and expenses.</p><div class="cards">
+<div class="card"><span class="muted">TODAY SALES</span><div id="todaySales" class="metric">₱0.00</div></div>
+<div class="card"><span class="muted">TODAY PROFIT*</span><div id="todayProfit" class="metric green">₱0.00</div></div>
+<div class="card"><span class="muted">PRODUCTS</span><div id="productCount" class="metric">0</div></div>
+<div class="card"><span class="muted">LOW STOCK</span><div id="lowStock" class="metric red">0</div></div></div>
+<div class="panel"><div class="head"><h3>Recent Sales</h3><button class="btn light" onclick="loadAll()">Refresh</button></div><div class="table"><table><thead><tr><th>Date</th><th>Product</th><th>Qty</th><th>Total</th></tr></thead><tbody id="dashRows"></tbody></table></div></div>
+<p class="muted">*Estimated profit uses retail price minus wholesale price, less expenses.</p></section>
 
-    <form id="loginForm">
-      <label>
-        Email
-        <input id="email" type="email" required>
-      </label>
+<section id="pos" class="page"><h2>Sales / POS</h2><p class="muted">Tap a product to add it to the cart.</p><div class="pos"><div class="panel"><input id="posSearch" class="search" placeholder="Search product / SKU" oninput="renderButtons()"><div id="buttons" class="products"></div></div>
+<div class="panel"><div class="head"><h3>Cart</h3><button class="btn light" onclick="clearCart()">Clear</button></div><div id="cart"></div><div class="total"><span>Total</span><span id="cartTotal">₱0.00</span></div><button id="checkout" class="btn primary block" style="margin-top:12px" onclick="checkout()">Complete Sale</button><div id="posMsg"></div></div></div></section>
 
-      <label>
-        Password
-        <input id="password" type="password" required>
-      </label>
+<section id="products" class="page"><h2>Products</h2><p class="muted">Manage products, stock and prices.</p><div class="panel"><div class="grid3">
+<div class="field"><label>Product name</label><input id="pn"></div><div class="field"><label>SKU</label><input id="ps"></div><div class="field"><label>Stock</label><input id="pst" type="number" min="0" value="0"></div>
+<div class="field"><label>Wholesale price</label><input id="pw" type="number" min="0" step=".01" value="0"></div><div class="field"><label>Retail price</label><input id="pr" type="number" min="0" step=".01" value="0"></div><div style="display:flex;align-items:end"><button class="btn primary block" onclick="addProduct()">Add Product</button></div></div><div id="productMsg"></div></div>
+<div class="panel"><div class="head"><h3>Inventory</h3><input id="productSearch" class="search" style="max-width:250px" placeholder="Search" oninput="renderProducts()"></div><div class="table"><table><thead><tr><th>Product</th><th>SKU</th><th>Stock</th><th>Wholesale</th><th>Retail</th><th></th></tr></thead><tbody id="productRows"></tbody></table></div></div></section>
 
-      <button type="submit">Login</button>
-    </form>
-  </div>
-</div>
+<section id="sales" class="page"><h2>Sales History</h2><p class="muted">All recorded sales.</p><div class="panel"><div class="table"><table><thead><tr><th>Date</th><th>Product</th><th>Qty</th><th>Unit Price</th><th>Total</th><th>Sold By</th></tr></thead><tbody id="saleRows"></tbody></table></div></div></section>
 
-<!-- APP -->
-<div id="app" class="hidden">
+<section id="expenses" class="page"><h2>Expenses</h2><p class="muted">Record shop expenses.</p><div class="panel"><div class="grid2"><div class="field"><label>Description</label><input id="ed"></div><div class="field"><label>Amount</label><input id="ea" type="number" min="0" step=".01"></div></div><button class="btn primary" onclick="addExpense()">Add Expense</button><div id="expenseMsg"></div></div>
+<div class="panel"><div class="table"><table><thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Created By</th></tr></thead><tbody id="expenseRows"></tbody></table></div></div></section>
 
-  <div class="top">
-    <div>
-      <b>TRIPLE K INVENTORY</b>
-      <div id="userInfo" class="muted"></div>
-    </div>
+<section id="reports" class="page"><h2>Reports</h2><p class="muted">Current month.</p><div class="cards">
+<div class="card"><span class="muted">MONTH SALES</span><div id="monthSales" class="metric">₱0.00</div></div><div class="card"><span class="muted">GROSS PROFIT</span><div id="gross" class="metric green">₱0.00</div></div><div class="card"><span class="muted">EXPENSES</span><div id="monthExp" class="metric red">₱0.00</div></div><div class="card"><span class="muted">NET PROFIT</span><div id="net" class="metric">₱0.00</div></div></div></section>
 
-    <button id="logout" class="gray">Logout</button>
-  </div>
-
-  <div class="wrap">
-
-    <div id="msg"></div>
-
-    <!-- NAVIGATION -->
-    <div class="nav">
-      <button class="active" data-tab="dashboard">Dashboard</button>
-      <button data-tab="products">Products</button>
-      <button data-tab="sales">Sales</button>
-      <button data-tab="expenses">Expenses</button>
-    </div>
-
-    <!-- DASHBOARD -->
-    <section id="dashboard" class="section active">
-      <div class="grid">
-
-        <div class="card">
-          <div class="muted">Products</div>
-          <div id="nProducts" class="stat">0</div>
-        </div>
-
-        <div class="card">
-          <div class="muted">Stock Units</div>
-          <div id="nStock" class="stat">0</div>
-        </div>
-
-        <div class="card">
-          <div class="muted">Today's Sales</div>
-          <div id="nSales" class="stat">₱0.00</div>
-        </div>
-
-        <div class="card">
-          <div class="muted">Today's Expenses</div>
-          <div id="nExpenses" class="stat">₱0.00</div>
-        </div>
-
-        <div class="card">
-          <div class="muted">Today's Net</div>
-          <div id="nNet" class="stat">₱0.00</div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- PRODUCTS -->
-    <section id="products" class="section">
-
-      <div class="card">
-        <h2>Products</h2>
-
-        <form id="productForm">
-
-          <div class="fields">
-
-            <label>
-              Name
-              <input id="pName" required>
-            </label>
-
-            <label>
-              SKU
-              <input id="pSku">
-            </label>
-
-            <label>
-              Stock
-              <input id="pStock" type="number" min="0" value="0" required>
-            </label>
-
-            <label>
-              Wholesale
-              <input id="pWholesale" type="number" min="0" step=".01" required>
-            </label>
-
-            <label>
-              Resell
-              <input id="pRetail" type="number" min="0" step=".01" required>
-            </label>
-
-          </div>
-
-          <button type="submit">Add Product</button>
-
-        </form>
-      </div>
-
-      <div class="table">
-        <table>
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>SKU</th>
-              <th>Stock</th>
-              <th>Wholesale</th>
-              <th>Resell</th>
-              <th></th>
-            </tr>
-          </thead>
-
-          <tbody id="productRows"></tbody>
-        </table>
-      </div>
-
-    </section>
-
-    <!-- SALES -->
-    <section id="sales" class="section">
-
-      <div class="card">
-        <h2>Record Sale</h2>
-
-        <form id="saleForm">
-
-          <div class="fields">
-
-            <label>
-              Product
-              <select id="saleProduct" required></select>
-            </label>
-
-            <label>
-              Quantity
-              <input id="saleQty" type="number" min="1" value="1" required>
-            </label>
-
-            <label>
-              Unit Price
-              <input id="salePrice" type="number" min="0" step=".01" required>
-            </label>
-
-          </div>
-
-          <button type="submit">Save Sale</button>
-
-        </form>
-      </div>
-
-      <div class="table">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Product</th>
-              <th>Qty</th>
-              <th>Price</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-
-          <tbody id="saleRows"></tbody>
-        </table>
-      </div>
-
-    </section>
-
-    <!-- EXPENSES -->
-    <section id="expenses" class="section">
-
-      <div class="card">
-        <h2>Record Expense</h2>
-
-        <form id="expenseForm">
-
-          <div class="fields">
-
-            <label>
-              Description
-              <input id="eDescription" required>
-            </label>
-
-            <label>
-              Amount
-              <input id="eAmount" type="number" min="0" step=".01" required>
-            </label>
-
-          </div>
-
-          <button type="submit">Save Expense</button>
-
-        </form>
-      </div>
-
-      <div class="table">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Amount</th>
-            </tr>
-          </thead>
-
-          <tbody id="expenseRows"></tbody>
-        </table>
-      </div>
-
-    </section>
-
-  </div>
-</div>
+</main></div></div>
 
 <script>
-
-let user = null;
-let products = [];
-
-const $ = id => document.getElementById(id);
-
-const peso = n =>
-  "₱" + Number(n || 0).toLocaleString("en-PH", {
-    minimumFractionDigits:2,
-    maximumFractionDigits:2
-  });
-
-const esc = s =>
-  String(s ?? "").replace(/[&<>"']/g,m=>({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#039;"
-  }[m]));
-
-function message(t,ok=false){
-  $("msg").className = t ? (ok ? "msg ok" : "msg error") : "";
-  $("msg").textContent = t || "";
-}
-
-function loginMessage(t){
-  $("loginMsg").className = t ? "msg error" : "";
-  $("loginMsg").textContent = t || "";
-}
-
-function startToday(){
-  let d = new Date();
-  d.setHours(0,0,0,0);
-  return d.toISOString();
-}
-
-async function profile(){
-
-  let r = await client
-    .from("profiles")
-    .select("full_name,role")
-    .eq("id",user.id)
-    .maybeSingle();
-
-  if(r.error) throw r.error;
-
-  $("userInfo").textContent =
-    (r.data?.full_name || user.email) +
-    " • " +
-    (r.data?.role || "user");
-}
-
-async function loadProducts(){
-
-  let r = await client
-    .from("products")
-    .select("*")
-    .eq("active",true)
-    .order("name");
-
-  if(r.error) throw r.error;
-
-  products = r.data || [];
-
-  $("productRows").innerHTML =
-    products.map(p => `
-      <tr>
-        <td>${esc(p.name)}</td>
-        <td>${esc(p.sku || "")}</td>
-        <td>${p.stock}</td>
-        <td>${peso(p.wholesale_price)}</td>
-        <td>${peso(p.retail_price)}</td>
-        <td>
-          <button class="red"
-            onclick="removeProduct('${p.id}')">
-            Delete
-          </button>
-        </td>
-      </tr>
-    `).join("") ||
-    "<tr><td colspan='6'>No products yet.</td></tr>";
-
-  $("saleProduct").innerHTML =
-    products.map(p => `
-      <option value="${p.id}">
-        ${esc(p.name)} — stock ${p.stock}
-      </option>
-    `).join("");
-
-  let p = products[0];
-
-  if(p){
-    $("salePrice").value = p.retail_price;
-  }
-}
-
-async function loadSales(){
-
-  let r = await client
-    .from("sales")
-    .select("id,product_id,qty,unit_price,total,created_at,products(name)")
-    .order("created_at",{ascending:false})
-    .limit(100);
-
-  if(r.error) throw r.error;
-
-  $("saleRows").innerHTML =
-    (r.data || []).map(s => `
-      <tr>
-        <td>${new Date(s.created_at).toLocaleString()}</td>
-        <td>${esc(s.products?.name || "")}</td>
-        <td>${s.qty}</td>
-        <td>${peso(s.unit_price)}</td>
-        <td>${peso(s.total)}</td>
-      </tr>
-    `).join("") ||
-    "<tr><td colspan='5'>No sales yet.</td></tr>";
-}
-
-async function loadExpenses(){
-
-  let r = await client
-    .from("expenses")
-    .select("description,amount,created_at")
-    .order("created_at",{ascending:false})
-    .limit(100);
-
-  if(r.error) throw r.error;
-
-  $("expenseRows").innerHTML =
-    (r.data || []).map(e => `
-      <tr>
-        <td>${new Date(e.created_at).toLocaleString()}</td>
-        <td>${esc(e.description)}</td>
-        <td>${peso(e.amount)}</td>
-      </tr>
-    `).join("") ||
-    "<tr><td colspan='3'>No expenses yet.</td></tr>";
-}
-
-async function dashboard(){
-
-  let p = await client
-    .from("products")
-    .select("stock")
-    .eq("active",true);
-
-  if(p.error) throw p.error;
-
-  let s = await client
-    .from("sales")
-    .select("total")
-    .gte("created_at",startToday());
-
-  if(s.error) throw s.error;
-
-  let e = await client
-    .from("expenses")
-    .select("amount")
-    .gte("created_at",startToday());
-
-  if(e.error) throw e.error;
-
-  let sales =
-    (s.data || []).reduce(
-      (a,x) => a + Number(x.total || 0),
-      0
-    );
-
-  let exp =
-    (e.data || []).reduce(
-      (a,x) => a + Number(x.amount || 0),
-      0
-    );
-
-  $("nProducts").textContent =
-    (p.data || []).length;
-
-  $("nStock").textContent =
-    (p.data || []).reduce(
-      (a,x) => a + Number(x.stock || 0),
-      0
-    );
-
-  $("nSales").textContent = peso(sales);
-  $("nExpenses").textContent = peso(exp);
-  $("nNet").textContent = peso(sales-exp);
-}
-
-async function refresh(){
-
-  await Promise.all([
-    loadProducts(),
-    loadSales(),
-    loadExpenses(),
-    dashboard()
-  ]);
-}
-
-async function removeProduct(id){
-
-  if(!confirm("Delete this product?")) return;
-
-  let r = await client
-    .from("products")
-    .update({active:false})
-    .eq("id",id);
-
-  if(r.error){
-    return message(r.error.message);
-  }
-
-  await refresh();
-
-  message("Product deleted.",true);
-}
-
-$("loginForm").onsubmit = async e => {
-
-  e.preventDefault();
-
-  loginMessage("Logging in...");
-
-  let r = await client.auth.signInWithPassword({
-    email:$("email").value.trim(),
-    password:$("password").value
-  });
-
-  if(r.error){
-    return loginMessage(r.error.message);
-  }
-
-  user = r.data.user;
-
-  await enter();
-};
-
-$("logout").onclick = async () => {
-
-  await client.auth.signOut();
-
-  location.reload();
-};
-
-$("productForm").onsubmit = async e => {
-
-  e.preventDefault();
-
-  let r = await client
-    .from("products")
-    .insert({
-      name:$("pName").value.trim(),
-      sku:$("pSku").value.trim() || null,
-      stock:+$("pStock").value,
-      wholesale_price:+$("pWholesale").value,
-      retail_price:+$("pRetail").value,
-      active:true
-    });
-
-  if(r.error){
-    return message(r.error.message);
-  }
-
-  e.target.reset();
-
-  $("pStock").value = 0;
-
-  await refresh();
-
-  message("Product added.",true);
-};
-
-$("saleProduct").onchange = () => {
-
-  let p = products.find(
-    x => x.id === $("saleProduct").value
-  );
-
-  if(p){
-    $("salePrice").value = p.retail_price;
-  }
-};
-
-$("saleForm").onsubmit = async e => {
-
-  e.preventDefault();
-
-  let p = products.find(
-    x => x.id === $("saleProduct").value
-  );
-
-  let q = +$("saleQty").value;
-  let price = +$("salePrice").value;
-
-  if(!p){
-    return message("Select a product.");
-  }
-
-  if(q > p.stock){
-    return message("Not enough stock.");
-  }
-
-  let r = await client
-    .from("sales")
-    .insert({
-      product_id:p.id,
-      qty:q,
-      unit_price:price,
-      total:q * price,
-      sold_by:user.id
-    });
-
-  if(r.error){
-    return message(r.error.message);
-  }
-
-  r = await client
-    .from("products")
-    .update({
-      stock:p.stock - q
-    })
-    .eq("id",p.id);
-
-  if(r.error){
-    return message(r.error.message);
-  }
-
-  e.target.reset();
-
-  $("saleQty").value = 1;
-
-  await refresh();
-
-  message("Sale saved and stock updated.",true);
-};
-
-$("expenseForm").onsubmit = async e => {
-
-  e.preventDefault();
-
-  let r = await client
-    .from("expenses")
-    .insert({
-      description:$("eDescription").value.trim(),
-      amount:+$("eAmount").value,
-      created_by:user.id
-    });
-
-  if(r.error){
-    return message(r.error.message);
-  }
-
-  e.target.reset();
-
-  await refresh();
-
-  message("Expense saved.",true);
-};
-
-document.querySelectorAll(".nav button").forEach(b => {
-
-  b.onclick = () => {
-
-    document
-      .querySelectorAll(".nav button")
-      .forEach(x => x.classList.remove("active"));
-
-    b.classList.add("active");
-
-    document
-      .querySelectorAll(".section")
-      .forEach(x => x.classList.remove("active"));
-
-    $(b.dataset.tab).classList.add("active");
-  };
-
-});
-
+const URL="https://ciudlcjuapgcxuipuksx.supabase.co",KEY="sb_publishable_71qnMeRCUHD4m6K0-q9u5g_niC3uB4H";
+const db=supabase.createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+let user=null,profile=null,products=[],sales=[],expenses=[],cart=[];
+const peso=n=>"₱"+Number(n||0).toLocaleString("en-PH",{minimumFractionDigits:2,maximumFractionDigits:2});
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const dt=d=>new Date(d).toLocaleString("en-PH",{dateStyle:"short",timeStyle:"short"});
+function message(id,t,ok=false){document.getElementById(id).innerHTML=t?'<div class="msg '+(ok?'success':'err')+'">'+esc(t)+'</div>':""}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(b.dataset.p).classList.add("active");if(b.dataset.p==="pos")renderButtons()});
+document.getElementById("loginForm").onsubmit=async e=>{e.preventDefault();message("loginMsg","");let{error}=await db.auth.signInWithPassword({email:email.value.trim(),password:password.value});if(error)message("loginMsg",error.message)};
+logout.onclick=async()=>{await db.auth.signOut();location.reload()};
+async function start(){let{data:{session}}=await db.auth.getSession();if(session){user=session.user;await enter()}}
+db.auth.onAuthStateChange(async(_,s)=>{if(s&&!user){user=s.user;await enter()}});
 async function enter(){
-
-  $("login").classList.add("hidden");
-  $("app").classList.remove("hidden");
-
-  try{
-
-    await profile();
-    await refresh();
-
-  }catch(e){
-
-    message(e.message);
-
-  }
+ login.classList.add("hide");app.classList.remove("hide");
+ let r=await db.from("profiles").select("name,role").eq("id",user.id).maybeSingle();
+ if(r.error)r=await db.from("profiles").select("full_name,role").eq("id",user.id).maybeSingle();
+ profile=r.data||{role:"employee",name:user.email};uname.textContent=profile.name||profile.full_name||user.email;urole.textContent=profile.role||"employee";await loadAll()
 }
-
-(async()=>{
-
-  let r = await client.auth.getSession();
-
-  if(r.data.session){
-
-    user = r.data.session.user;
-
-    await enter();
-  }
-
-})();
-
-</script>
-
-</body>
-</html>
+async function loadAll(){await Promise.all([loadProducts(),loadSales(),loadExpenses()]);renderProducts();renderButtons();renderCart();renderSales();renderExpenses();dashboard();reports()}
+async function loadProducts(){let r=await db.from("products").select("id,name,sku,stock,wholesale_price,retail_price,active,created_at").eq("active",true).order("name");if(!r.error)products=r.data||[];else message("productMsg",r.error.message)}
+async function loadSales(){let r=await db.from("sales").select("id,product_id,quantity,unit_price,total,sold_by,created_at,products(name)").order("created_at",{ascending:false}).limit(500);sales=r.error?[]:(r.data||[])}
+async function loadExpenses(){let r=await db.from("expenses").select("id,description,amount,created_by,created_at").order("created_at",{ascending:false}).limit(500);expenses=r.error?[]:(r.data||[])}
+function renderProducts(){let q=(productSearch?.value||"").toLowerCase(),a=products.filter(p=>(p.name+" "+(p.sku||"")).toLowerCase().includes(q));productRows.innerHTML=a.length?a.map(p=>'<tr><td><b>'+esc(p.name)+'</b></td><td>'+esc(p.sku||"—")+'</td><td><span class="badge '+(p.stock<=5?"low":p.stock<=15?"mid":"high")+'">'+p.stock+'</span></td><td>'+peso(p.wholesale_price)+'</td><td>'+peso(p.retail_price)+'</td><td><button class="btn danger" onclick="deleteProduct(\''+p.id+'\')">Delete</button></td></tr>').join(""):'<tr><td colspan="6">No products yet.</td></tr>'}
+function renderButtons(){let q=(posSearch?.value||"").toLowerCase();let a=products.filter(p=>(p.name+" "+(p.sku||"")).toLowerCase().includes(q));buttons.innerHTML=a.map(p=>'<button class="prod" onclick="addCart(\''+p.id+'\')"><b>'+esc(p.name)+'</b><br><small>'+esc(p.sku||"No SKU")+' · Stock: '+p.stock+'</small><br><b>'+peso(p.retail_price)+'</b></button>').join("")||'<span class="muted">No products found.</span>'}
+function renderCart(){cartEl=document.getElementById("cart");cartEl.innerHTML=cart.length?cart.map((x,i)=>'<div class="cartrow"><div><b>'+esc(x.name)+'</b><br><small>'+peso(x.retail_price)+'</small></div><input class="qty" type="number" min="1" max="'+x.stock+'" value="'+x.qty+'" onchange="qty('+i+',this.value)"><b>'+peso(x.qty*x.retail_price)+'</b><button class="btn light" onclick="removeCart('+i+')">×</button></div>').join(""):'<div class="muted" style="padding:12px 0">Cart is empty.</div>';cartTotal.textContent=peso(cart.reduce((a,x)=>a+x.qty*x.retail_price,0))}
+function addCart(id){let p=products.find(x=>x.id===id);if(!p||p.stock<1)return;let x=cart.find(x=>x.id===id);if(x){if(x.qty<p.stock)x.qty++}else cart.push({...p,qty:1});renderCart()}
+function qty(i,v){cart[i].qty=Math.max(1,Math.min(Number(v)||1,cart[i].stock));renderCart()}
+function removeCart(i){cart.splice(i,1);renderCart()}function clearCart(){cart=[];renderCart();message("posMsg","")}
+async function checkout(){if(!cart.length){message("posMsg","Cart is empty.");return}checkout.disabled=true;try{for(let x of cart){let p=products.find(y=>y.id===x.id);if(!p||p.stock<x.qty)throw Error("Not enough stock: "+x.name);let r=await db.from("sales").insert({product_id:x.id,quantity:x.qty,unit_price:x.retail_price,total:x.qty*x.retail_price,sold_by:user.id});if(r.error)throw r.error;r=await db.from("products").update({stock:p.stock-x.qty}).eq("id",x.id);if(r.error)throw r.error}cart=[];message("posMsg","Sale completed.","ok");await loadAll()}catch(e){message("posMsg",e.message)}finally{checkout.disabled=false}}
+async function addProduct(){let name=pn.value.trim(),sku=ps.value.trim()||null,stock=+pst.value||0,wholesale=+pw.value||0,retail=+pr.value||0;if(!name){message("productMsg","Product name is required.");return}let r=await db.from("products").insert({name,sku,stock,wholesale_price:wholesale,retail_price:retail,active:true});if(r.error)message("productMsg",r.error.message);else{pn.value="";ps.value="";pst.value=0;pw.value=0;pr.value=0;message("productMsg","Product added.","ok");await loadAll()}}
+async function deleteProduct(id){if(!confirm("Delete this product?"))return;let r=await db.from("products").update({active:false}).eq("id",id);if(r.error)message("productMsg",r.error.message);else await loadAll()}
+function renderSales(){saleRows.innerHTML=sales.length?sales.map(s=>'<tr><td>'+dt(s.created_at)+'</td><td>'+esc(s.products?.name||"Deleted product")+'</td><td>'+s.quantity+'</td><td>'+peso(s.unit_price)+'</td><td><b>'+peso(s.total)+'</b></td><td>'+esc(s.sold_by||"—")+'</td></tr>').join(""):'<tr><td colspan="6">No sales yet.</td></tr>'}
+function renderExpenses(){expenseRows.innerHTML=expenses.length?expenses.map(e=>'<tr><td>'+dt(e.created_at)+'</td><td>'+esc(e.description)+'</td><td><b>'+peso(e.amount)+'</b></td><td>'+esc(e.created_by||"—")+'</td></tr>').join(""):'<tr><td colspan="4">No expenses yet.</td></tr>'}
+async function addExpense(){let description=ed.value.trim(),amount=+ea.value||0;if(!description||amount<=0){message("expenseMsg","Enter description and amount.");return}let r=await db.from("expenses").insert({description,amount,created_by:user.id});if(r.error)message("expenseMsg",r.error.message);else{ed.value="";ea.value="";message("expenseMsg","Expense added.","ok");await loadAll()}}
+function profit(a){return a.reduce((n,s)=>{let p=products.find(x=>x.id===s.product_id);return n+(p?(+s.unit_price-+p.wholesale_price)*+s.quantity:0)},0)}
+function dashboard(){let d=new Date(),start=new Date(d.getFullYear(),d.getMonth(),d.getDate()),a=sales.filter(s=>new Date(s.created_at)>=start),ex=expenses.filter(e=>new Date(e.created_at)>=start).reduce((n,e)=>n+ +e.amount,0);todaySales.textContent=peso(a.reduce((n,s)=>n+ +s.total,0));todayProfit.textContent=peso(profit(a)-ex);productCount.textContent=products.length;lowStock.textContent=products.filter(p=>p.stock<=5).length;dashRows.innerHTML=a.slice(0,10).map(s=>'<tr><td>'+dt(s.created_at)+'</td><td>'+esc(s.products?.name||"Deleted")+'</td><td>'+s.quantity+'</td><td>'+peso(s.total)+'</td></tr>').join("")||'<tr><td colspan="4">No sales today.</td></tr>'}
+function reports(){let d=new Date(),start=new Date(d.getFullYear(),d.getMonth(),1),a=sales.filter(s=>new Date(s.created_at)>=start),ex=expenses.filter(e=>new Date(e.created_at)>=start).reduce((n,e)=>n+ +e.amount,0),st=a.reduce((n,s)=>n+ +s.total,0),gp=profit(a);monthSales.textContent=peso(st);gross.textContent=peso(gp);monthExp.textContent=peso(ex);net.textContent=peso(gp-ex)}
+start();
+</script></body></html>
