@@ -4,123 +4,805 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Triple K Vape Shop Inventory</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://ciudlcjuapgcxuipuksx.supabase.co";
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_71qnMeRCUHD4m6K0-q9u5g_niC3uB4H";
 
-  const client = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://ciudlcjuapgcxuipuksx.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_71qnMeRCUHD4m6K0-q9u5g_niC3uB4H";
+
+const client = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 </script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#17202a}
-.top{background:#111827;color:white;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.wrap{max-width:1200px;margin:auto;padding:20px}button,input,select{font:inherit}button{border:0;border-radius:8px;padding:10px 14px;background:#111827;color:white;cursor:pointer}button.red{background:#dc2626}button.gray{background:#e5e7eb;color:#111827}
-.nav{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.nav button{background:white;color:#111;border:1px solid #ddd}.nav button.active{background:#111827;color:white}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}.card{background:white;border:1px solid #ddd;border-radius:12px;padding:18px}
-.stat{font-size:25px;font-weight:bold;margin-top:6px}.section{display:none}.section.active{display:block}
-form{display:grid;gap:10px}.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
-label{font-size:13px;font-weight:bold}input,select{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px}
-.table{overflow:auto;background:white;border:1px solid #ddd;border-radius:10px;margin-top:14px}table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;white-space:nowrap}th{background:#f8fafc}
-.login{max-width:420px;margin:70px auto}.hidden{display:none!important}.msg{padding:10px;border-radius:8px;margin-bottom:10px}.error{background:#fee2e2;color:#991b1b}.ok{background:#dcfce7;color:#166534}
-.muted{color:#667085;font-size:13px}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  color:#17202a
+}
+.top{
+  background:#111827;
+  color:white;
+  padding:16px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap
+}
+.wrap{
+  max-width:1200px;
+  margin:auto;
+  padding:20px
+}
+button,input,select{font:inherit}
+button{
+  border:0;
+  border-radius:8px;
+  padding:10px 14px;
+  background:#111827;
+  color:white;
+  cursor:pointer
+}
+button.red{background:#dc2626}
+button.gray{
+  background:#e5e7eb;
+  color:#111827
+}
+.nav{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:15px 0
+}
+.nav button{
+  background:white;
+  color:#111;
+  border:1px solid #ddd
+}
+.nav button.active{
+  background:#111827;
+  color:white
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:14px
+}
+.card{
+  background:white;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:18px
+}
+.stat{
+  font-size:25px;
+  font-weight:bold;
+  margin-top:6px
+}
+.section{display:none}
+.section.active{display:block}
+form{display:grid;gap:10px}
+.fields{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:10px
+}
+label{
+  font-size:13px;
+  font-weight:bold
+}
+input,select{
+  width:100%;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:8px
+}
+.table{
+  overflow:auto;
+  background:white;
+  border:1px solid #ddd;
+  border-radius:10px;
+  margin-top:14px
+}
+table{
+  width:100%;
+  border-collapse:collapse
+}
+th,td{
+  padding:10px;
+  border-bottom:1px solid #eee;
+  text-align:left;
+  white-space:nowrap
+}
+th{background:#f8fafc}
+.login{
+  max-width:420px;
+  margin:70px auto
+}
+.hidden{display:none!important}
+.msg{
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:10px
+}
+.error{
+  background:#fee2e2;
+  color:#991b1b
+}
+.ok{
+  background:#dcfce7;
+  color:#166534
+}
+.muted{
+  color:#667085;
+  font-size:13px
+}
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap
+}
 </style>
 </head>
-<body>
-<div id="login" class="wrap login"><div class="card">
-<h1>TRIPLE K INVENTORY</h1><p class="muted">Cloud Inventory System</p><div id="loginMsg"></div>
-<form id="loginForm">
-<label>Email<input id="email" type="email" required></label>
-<label>Password<input id="password" type="password" required></label>
-<button>Login</button>
-</form></div></div>
 
-<div id="app" class="hidden">
-<div class="top"><div><b>TRIPLE K INVENTORY</b><div id="userInfo" class="muted"></div></div><button id="logout" class="gray">Logout</button></div>
-<div class="wrap"><div id="msg"></div>
-<div class="nav">
-<button class="active" data-tab="dashboard">Dashboard</button><button data-tab="products">Products</button><button data-tab="sales">Sales</button><button data-tab="expenses">Expenses</button>
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="wrap login">
+  <div class="card">
+    <h1>TRIPLE K INVENTORY</h1>
+    <p class="muted">Cloud Inventory System</p>
+
+    <div id="loginMsg"></div>
+
+    <form id="loginForm">
+      <label>
+        Email
+        <input id="email" type="email" required>
+      </label>
+
+      <label>
+        Password
+        <input id="password" type="password" required>
+      </label>
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
 </div>
 
-<section id="dashboard" class="section active"><div class="grid">
-<div class="card"><div class="muted">Products</div><div id="nProducts" class="stat">0</div></div>
-<div class="card"><div class="muted">Stock Units</div><div id="nStock" class="stat">0</div></div>
-<div class="card"><div class="muted">Today's Sales</div><div id="nSales" class="stat">₱0.00</div></div>
-<div class="card"><div class="muted">Today's Expenses</div><div id="nExpenses" class="stat">₱0.00</div></div>
-<div class="card"><div class="muted">Today's Net</div><div id="nNet" class="stat">₱0.00</div></div>
-</div></section>
+<!-- APP -->
+<div id="app" class="hidden">
 
-<section id="products" class="section"><div class="card"><h2>Products</h2>
-<form id="productForm"><div class="fields">
-<label>Name<input id="pName" required></label><label>SKU<input id="pSku"></label>
-<label>Stock<input id="pStock" type="number" min="0" value="0" required></label>
-<label>Wholesale<input id="pWholesale" type="number" min="0" step=".01" required></label>
-<label>Resell<input id="pRetail" type="number" min="0" step=".01" required></label>
-</div><button>Add Product</button></form></div>
-<div class="table"><table><thead><tr><th>Product</th><th>SKU</th><th>Stock</th><th>Wholesale</th><th>Resell</th><th></th></tr></thead><tbody id="products"></tbody></table></div></section>
+  <div class="top">
+    <div>
+      <b>TRIPLE K INVENTORY</b>
+      <div id="userInfo" class="muted"></div>
+    </div>
 
-<section id="sales" class="section"><div class="card"><h2>Record Sale</h2>
-<form id="saleForm"><div class="fields"><label>Product<select id="saleProduct" required></select></label>
-<label>Quantity<input id="saleQty" type="number" min="1" value="1" required></label>
-<label>Unit Price<input id="salePrice" type="number" min="0" step=".01" required></label></div><button>Save Sale</button></form></div>
-<div class="table"><table><thead><tr><th>Date</th><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody id="sales"></tbody></table></div></section>
+    <button id="logout" class="gray">Logout</button>
+  </div>
 
-<section id="expenses" class="section"><div class="card"><h2>Record Expense</h2>
-<form id="expenseForm"><div class="fields"><label>Description<input id="eDescription" required></label><label>Amount<input id="eAmount" type="number" min="0" step=".01" required></label></div><button>Save Expense</button></form></div>
-<div class="table"><table><thead><tr><th>Date</th><th>Description</th><th>Amount</th></tr></thead><tbody id="expenses"></tbody></table></div></section>
-</div></div>
+  <div class="wrap">
+
+    <div id="msg"></div>
+
+    <!-- NAVIGATION -->
+    <div class="nav">
+      <button class="active" data-tab="dashboard">Dashboard</button>
+      <button data-tab="products">Products</button>
+      <button data-tab="sales">Sales</button>
+      <button data-tab="expenses">Expenses</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="section active">
+      <div class="grid">
+
+        <div class="card">
+          <div class="muted">Products</div>
+          <div id="nProducts" class="stat">0</div>
+        </div>
+
+        <div class="card">
+          <div class="muted">Stock Units</div>
+          <div id="nStock" class="stat">0</div>
+        </div>
+
+        <div class="card">
+          <div class="muted">Today's Sales</div>
+          <div id="nSales" class="stat">₱0.00</div>
+        </div>
+
+        <div class="card">
+          <div class="muted">Today's Expenses</div>
+          <div id="nExpenses" class="stat">₱0.00</div>
+        </div>
+
+        <div class="card">
+          <div class="muted">Today's Net</div>
+          <div id="nNet" class="stat">₱0.00</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="products" class="section">
+
+      <div class="card">
+        <h2>Products</h2>
+
+        <form id="productForm">
+
+          <div class="fields">
+
+            <label>
+              Name
+              <input id="pName" required>
+            </label>
+
+            <label>
+              SKU
+              <input id="pSku">
+            </label>
+
+            <label>
+              Stock
+              <input id="pStock" type="number" min="0" value="0" required>
+            </label>
+
+            <label>
+              Wholesale
+              <input id="pWholesale" type="number" min="0" step=".01" required>
+            </label>
+
+            <label>
+              Resell
+              <input id="pRetail" type="number" min="0" step=".01" required>
+            </label>
+
+          </div>
+
+          <button type="submit">Add Product</button>
+
+        </form>
+      </div>
+
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>SKU</th>
+              <th>Stock</th>
+              <th>Wholesale</th>
+              <th>Resell</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody id="productRows"></tbody>
+        </table>
+      </div>
+
+    </section>
+
+    <!-- SALES -->
+    <section id="sales" class="section">
+
+      <div class="card">
+        <h2>Record Sale</h2>
+
+        <form id="saleForm">
+
+          <div class="fields">
+
+            <label>
+              Product
+              <select id="saleProduct" required></select>
+            </label>
+
+            <label>
+              Quantity
+              <input id="saleQty" type="number" min="1" value="1" required>
+            </label>
+
+            <label>
+              Unit Price
+              <input id="salePrice" type="number" min="0" step=".01" required>
+            </label>
+
+          </div>
+
+          <button type="submit">Save Sale</button>
+
+        </form>
+      </div>
+
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Product</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+
+          <tbody id="saleRows"></tbody>
+        </table>
+      </div>
+
+    </section>
+
+    <!-- EXPENSES -->
+    <section id="expenses" class="section">
+
+      <div class="card">
+        <h2>Record Expense</h2>
+
+        <form id="expenseForm">
+
+          <div class="fields">
+
+            <label>
+              Description
+              <input id="eDescription" required>
+            </label>
+
+            <label>
+              Amount
+              <input id="eAmount" type="number" min="0" step=".01" required>
+            </label>
+
+          </div>
+
+          <button type="submit">Save Expense</button>
+
+        </form>
+      </div>
+
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+
+          <tbody id="expenseRows"></tbody>
+        </table>
+      </div>
+
+    </section>
+
+  </div>
+</div>
 
 <script>
-let user=null, products=[];
 
-const $=id=>document.getElementById(id);
-const peso=n=>"₱"+Number(n||0).toLocaleString("en-PH",{minimumFractionDigits:2,maximumFractionDigits:2});
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-function message(t,ok=false){$("msg").className=t?(ok?"msg ok":"msg error"):"";$("msg").textContent=t||""}
-function loginMessage(t){$("loginMsg").className=t?"msg error":"";$("loginMsg").textContent=t||""}
-function startToday(){let d=new Date();d.setHours(0,0,0,0);return d.toISOString()}
+let user = null;
+let products = [];
 
-async function profile(){let r=await client.from("profiles").select("full_name,role").eq("id",user.id).maybeSingle();if(r.error)throw r.error;$("userInfo").textContent=(r.data?.full_name||user.email)+" • "+(r.data?.role||"user")}
+const $ = id => document.getElementById(id);
+
+const peso = n =>
+  "₱" + Number(n || 0).toLocaleString("en-PH", {
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
+
+const esc = s =>
+  String(s ?? "").replace(/[&<>"']/g,m=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
+
+function message(t,ok=false){
+  $("msg").className = t ? (ok ? "msg ok" : "msg error") : "";
+  $("msg").textContent = t || "";
+}
+
+function loginMessage(t){
+  $("loginMsg").className = t ? "msg error" : "";
+  $("loginMsg").textContent = t || "";
+}
+
+function startToday(){
+  let d = new Date();
+  d.setHours(0,0,0,0);
+  return d.toISOString();
+}
+
+async function profile(){
+
+  let r = await client
+    .from("profiles")
+    .select("full_name,role")
+    .eq("id",user.id)
+    .maybeSingle();
+
+  if(r.error) throw r.error;
+
+  $("userInfo").textContent =
+    (r.data?.full_name || user.email) +
+    " • " +
+    (r.data?.role || "user");
+}
+
 async function loadProducts(){
- let r=await client.from("products").select("*").eq("active",true).order("name");if(r.error)throw r.error;products=r.data||[];
- $("products").innerHTML=products.map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(p.sku||"")}</td><td>${p.stock}</td><td>${peso(p.wholesale_price)}</td><td>${peso(p.retail_price)}</td><td><button class="red" onclick="removeProduct('${p.id}')">Delete</button></td></tr>`).join("")||"<tr><td colspan=6>No products yet.</td></tr>";
- $("saleProduct").innerHTML=products.map(p=>`<option value="${p.id}">${esc(p.name)} — stock ${p.stock}</option>`).join("");
- let p=products[0];if(p)$("salePrice").value=p.retail_price;
+
+  let r = await client
+    .from("products")
+    .select("*")
+    .eq("active",true)
+    .order("name");
+
+  if(r.error) throw r.error;
+
+  products = r.data || [];
+
+  $("productRows").innerHTML =
+    products.map(p => `
+      <tr>
+        <td>${esc(p.name)}</td>
+        <td>${esc(p.sku || "")}</td>
+        <td>${p.stock}</td>
+        <td>${peso(p.wholesale_price)}</td>
+        <td>${peso(p.retail_price)}</td>
+        <td>
+          <button class="red"
+            onclick="removeProduct('${p.id}')">
+            Delete
+          </button>
+        </td>
+      </tr>
+    `).join("") ||
+    "<tr><td colspan='6'>No products yet.</td></tr>";
+
+  $("saleProduct").innerHTML =
+    products.map(p => `
+      <option value="${p.id}">
+        ${esc(p.name)} — stock ${p.stock}
+      </option>
+    `).join("");
+
+  let p = products[0];
+
+  if(p){
+    $("salePrice").value = p.retail_price;
+  }
 }
+
 async function loadSales(){
- let r=await client.from("sales").select("id,product_id,quantity,unit_price,total,created_at,products(name)").order("created_at",{ascending:false}).limit(100);if(r.error)throw r.error;
- $("sales").innerHTML=(r.data||[]).map(s=>`<tr><td>${new Date(s.created_at).toLocaleString()}</td><td>${esc(s.products?.name||"")}</td><td>${s.quantity}</td><td>${peso(s.unit_price)}</td><td>${peso(s.total)}</td></tr>`).join("")||"<tr><td colspan=5>No sales yet.</td></tr>";
+
+  let r = await client
+    .from("sales")
+    .select("id,product_id,qty,unit_price,total,created_at,products(name)")
+    .order("created_at",{ascending:false})
+    .limit(100);
+
+  if(r.error) throw r.error;
+
+  $("saleRows").innerHTML =
+    (r.data || []).map(s => `
+      <tr>
+        <td>${new Date(s.created_at).toLocaleString()}</td>
+        <td>${esc(s.products?.name || "")}</td>
+        <td>${s.qty}</td>
+        <td>${peso(s.unit_price)}</td>
+        <td>${peso(s.total)}</td>
+      </tr>
+    `).join("") ||
+    "<tr><td colspan='5'>No sales yet.</td></tr>";
 }
+
 async function loadExpenses(){
- let r=await client.from("expenses").select("description,amount,created_at").order("created_at",{ascending:false}).limit(100);if(r.error)throw r.error;
- $("expenses").innerHTML=(r.data||[]).map(e=>`<tr><td>${new Date(e.created_at).toLocaleString()}</td><td>${esc(e.description)}</td><td>${peso(e.amount)}</td></tr>`).join("")||"<tr><td colspan=3>No expenses yet.</td></tr>";
+
+  let r = await client
+    .from("expenses")
+    .select("description,amount,created_at")
+    .order("created_at",{ascending:false})
+    .limit(100);
+
+  if(r.error) throw r.error;
+
+  $("expenseRows").innerHTML =
+    (r.data || []).map(e => `
+      <tr>
+        <td>${new Date(e.created_at).toLocaleString()}</td>
+        <td>${esc(e.description)}</td>
+        <td>${peso(e.amount)}</td>
+      </tr>
+    `).join("") ||
+    "<tr><td colspan='3'>No expenses yet.</td></tr>";
 }
+
 async function dashboard(){
- let p=await client.from("products").select("stock").eq("active",true);if(p.error)throw p.error;
- let s=await client.from("sales").select("total").gte("created_at",startToday());if(s.error)throw s.error;
- let e=await client.from("expenses").select("amount").gte("created_at",startToday());if(e.error)throw e.error;
- let sales=(s.data||[]).reduce((a,x)=>a+Number(x.total||0),0),exp=(e.data||[]).reduce((a,x)=>a+Number(x.amount||0),0);
- $("nProducts").textContent=(p.data||[]).length;$("nStock").textContent=(p.data||[]).reduce((a,x)=>a+Number(x.stock||0),0);
- $("nSales").textContent=peso(sales);$("nExpenses").textContent=peso(exp);$("nNet").textContent=peso(sales-exp);
+
+  let p = await client
+    .from("products")
+    .select("stock")
+    .eq("active",true);
+
+  if(p.error) throw p.error;
+
+  let s = await client
+    .from("sales")
+    .select("total")
+    .gte("created_at",startToday());
+
+  if(s.error) throw s.error;
+
+  let e = await client
+    .from("expenses")
+    .select("amount")
+    .gte("created_at",startToday());
+
+  if(e.error) throw e.error;
+
+  let sales =
+    (s.data || []).reduce(
+      (a,x) => a + Number(x.total || 0),
+      0
+    );
+
+  let exp =
+    (e.data || []).reduce(
+      (a,x) => a + Number(x.amount || 0),
+      0
+    );
+
+  $("nProducts").textContent =
+    (p.data || []).length;
+
+  $("nStock").textContent =
+    (p.data || []).reduce(
+      (a,x) => a + Number(x.stock || 0),
+      0
+    );
+
+  $("nSales").textContent = peso(sales);
+  $("nExpenses").textContent = peso(exp);
+  $("nNet").textContent = peso(sales-exp);
 }
-async function refresh(){await Promise.all([loadProducts(),loadSales(),loadExpenses(),dashboard()])}
-async function removeProduct(id){if(!confirm("Delete this product?"))return;let r=await client.from("products").update({active:false}).eq("id",id);if(r.error)return message(r.error.message);await refresh();message("Product deleted.",true)}
 
-$("loginForm").onsubmit=async e=>{e.preventDefault();loginMessage("Logging in...");let r=await client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(r.error)return loginMessage(r.error.message);user=r.data.user;await enter()};
-$("logout").onclick=async()=>{await client.auth.signOut();location.reload()};
+async function refresh(){
 
-$("productForm").onsubmit=async e=>{e.preventDefault();let r=await client.from("products").insert({name:$("pName").value.trim(),sku:$("pSku").value.trim()||null,stock:+$("pStock").value,wholesale_price:+$("pWholesale").value,retail_price:+$("pRetail").value,active:true});if(r.error)return message(r.error.message);e.target.reset();$("pStock").value=0;await refresh();message("Product added.",true)};
-$("saleProduct").onchange=()=>{let p=products.find(x=>x.id===$("saleProduct").value);if(p)$("salePrice").value=p.retail_price};
-$("saleForm").onsubmit=async e=>{e.preventDefault();let p=products.find(x=>x.id===$("saleProduct").value),q=+$("saleQty").value,price=+$("salePrice").value;if(!p)return message("Select a product.");if(q>p.stock)return message("Not enough stock.");
-let r=await client.from("sales").insert({product_id:p.id,quantity:q,unit_price:price,total:q*price,sold_by:user.id});if(r.error)return message(r.error.message);
-r=await client.from("products").update({stock:p.stock-q,updated_at:new Date().toISOString()}).eq("id",p.id);if(r.error)return message(r.error.message);
-e.target.reset();$("saleQty").value=1;await refresh();message("Sale saved and stock updated.",true)};
-$("expenseForm").onsubmit=async e=>{e.preventDefault();let r=await client.from("expenses").insert({description:$("eDescription").value.trim(),amount:+$("eAmount").value,recorded_by:user.id});if(r.error)return message(r.error.message);e.target.reset();await refresh();message("Expense saved.",true)};
+  await Promise.all([
+    loadProducts(),
+    loadSales(),
+    loadExpenses(),
+    dashboard()
+  ]);
+}
 
-document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));$(b.dataset.tab).classList.add("active")});
-async function enter(){$("login").classList.add("hidden");$("app").classList.remove("hidden");try{await profile();await refresh()}catch(e){message(e.message)}}
-(async()=>{let r=await client.auth.getSession();if(r.data.session){user=r.data.session.user;await enter()}})();
+async function removeProduct(id){
+
+  if(!confirm("Delete this product?")) return;
+
+  let r = await client
+    .from("products")
+    .update({active:false})
+    .eq("id",id);
+
+  if(r.error){
+    return message(r.error.message);
+  }
+
+  await refresh();
+
+  message("Product deleted.",true);
+}
+
+$("loginForm").onsubmit = async e => {
+
+  e.preventDefault();
+
+  loginMessage("Logging in...");
+
+  let r = await client.auth.signInWithPassword({
+    email:$("email").value.trim(),
+    password:$("password").value
+  });
+
+  if(r.error){
+    return loginMessage(r.error.message);
+  }
+
+  user = r.data.user;
+
+  await enter();
+};
+
+$("logout").onclick = async () => {
+
+  await client.auth.signOut();
+
+  location.reload();
+};
+
+$("productForm").onsubmit = async e => {
+
+  e.preventDefault();
+
+  let r = await client
+    .from("products")
+    .insert({
+      name:$("pName").value.trim(),
+      sku:$("pSku").value.trim() || null,
+      stock:+$("pStock").value,
+      wholesale_price:+$("pWholesale").value,
+      retail_price:+$("pRetail").value,
+      active:true
+    });
+
+  if(r.error){
+    return message(r.error.message);
+  }
+
+  e.target.reset();
+
+  $("pStock").value = 0;
+
+  await refresh();
+
+  message("Product added.",true);
+};
+
+$("saleProduct").onchange = () => {
+
+  let p = products.find(
+    x => x.id === $("saleProduct").value
+  );
+
+  if(p){
+    $("salePrice").value = p.retail_price;
+  }
+};
+
+$("saleForm").onsubmit = async e => {
+
+  e.preventDefault();
+
+  let p = products.find(
+    x => x.id === $("saleProduct").value
+  );
+
+  let q = +$("saleQty").value;
+  let price = +$("salePrice").value;
+
+  if(!p){
+    return message("Select a product.");
+  }
+
+  if(q > p.stock){
+    return message("Not enough stock.");
+  }
+
+  let r = await client
+    .from("sales")
+    .insert({
+      product_id:p.id,
+      qty:q,
+      unit_price:price,
+      total:q * price,
+      sold_by:user.id
+    });
+
+  if(r.error){
+    return message(r.error.message);
+  }
+
+  r = await client
+    .from("products")
+    .update({
+      stock:p.stock - q
+    })
+    .eq("id",p.id);
+
+  if(r.error){
+    return message(r.error.message);
+  }
+
+  e.target.reset();
+
+  $("saleQty").value = 1;
+
+  await refresh();
+
+  message("Sale saved and stock updated.",true);
+};
+
+$("expenseForm").onsubmit = async e => {
+
+  e.preventDefault();
+
+  let r = await client
+    .from("expenses")
+    .insert({
+      description:$("eDescription").value.trim(),
+      amount:+$("eAmount").value,
+      created_by:user.id
+    });
+
+  if(r.error){
+    return message(r.error.message);
+  }
+
+  e.target.reset();
+
+  await refresh();
+
+  message("Expense saved.",true);
+};
+
+document.querySelectorAll(".nav button").forEach(b => {
+
+  b.onclick = () => {
+
+    document
+      .querySelectorAll(".nav button")
+      .forEach(x => x.classList.remove("active"));
+
+    b.classList.add("active");
+
+    document
+      .querySelectorAll(".section")
+      .forEach(x => x.classList.remove("active"));
+
+    $(b.dataset.tab).classList.add("active");
+  };
+
+});
+
+async function enter(){
+
+  $("login").classList.add("hidden");
+  $("app").classList.remove("hidden");
+
+  try{
+
+    await profile();
+    await refresh();
+
+  }catch(e){
+
+    message(e.message);
+
+  }
+}
+
+(async()=>{
+
+  let r = await client.auth.getSession();
+
+  if(r.data.session){
+
+    user = r.data.session.user;
+
+    await enter();
+  }
+
+})();
+
 </script>
-</body></html>
+
+</body>
+</html>
